@@ -39,7 +39,7 @@ public class SortableDataTablesTest {
         Assert.assertEquals(driver.findElement(By.xpath("//tr[2]/td[@class = 'first-name']")).getText(), "Frank", "Incorrect data in the Table 2, Row 2, Cell 2");
         Assert.assertEquals(driver.findElement(By.xpath("//tr[3]/td[@class = 'email']")).getText(), "jdoe@hotmail.com", "Incorrect data in the Table 2, Row 3, Cell 3");
         Assert.assertEquals(driver.findElement(By.xpath("//tr[4]/td[@class = 'dues']")).getText(), "$50.00", "Incorrect data in the Table 2, Row 4, Cell 4");
-        Assert.assertEquals(driver.findElement(By.xpath("//tr[4]/td[@class = 'web-site']")).getText(), "http://www.timconway.com", "Incorrect data in the Table 2, Row 4, Cell 4");
+        Assert.assertEquals(driver.findElement(By.xpath("//tr[4]/td[@class = 'web-site']")).getText(), "http://www.timconway.com", "Incorrect data in the Table 2, Row 4, Cell 5");
     }
 
     @AfterMethod(alwaysRun = true)
