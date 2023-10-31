@@ -10,10 +10,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
-import java.util.List;
 
 
-public class AddRemoveElementsTest {
+public class TypoTest {
     WebDriver driver;
 
     @BeforeMethod
@@ -26,14 +25,16 @@ public class AddRemoveElementsTest {
     }
 
     @Test
-    public void addRemoveElements() {
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.cssSelector("[onclick='addElement()']")).click();
-        driver.findElement(By.cssSelector("[onclick='addElement()']")).click();
-        List<WebElement> webElementListBeforeRemoval = driver.findElements(By.className("added-manually"));
-        webElementListBeforeRemoval.get(1).click();
-        List<WebElement> webElementListAfterRemoval = driver.findElements(By.className("added-manually"));
-        Assert.assertEquals(webElementListAfterRemoval.size(), 1, "Quantity of elements is not correct after removal!");
+    public void loopTyposCheck() {
+        driver.get("https://the-internet.herokuapp.com/typos");
+        int iterationNumber = 0;
+        do {
+            System.out.println("Iteration number = " + ++iterationNumber);
+            WebElement textWithTypo = driver.findElements(By.tagName("p")).get(1);
+            System.out.println(textWithTypo.getText());
+            Assert.assertEquals(textWithTypo.getText(), "Sometimes you'll see a typo, other times you won't.", "There is a typo in the text");
+            driver.navigate().refresh();
+        } while (true);
     }
 
     @AfterMethod(alwaysRun = true)

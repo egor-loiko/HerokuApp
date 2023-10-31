@@ -10,10 +10,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
-import java.util.List;
 
 
-public class AddRemoveElementsTest {
+public class CheckboxesTest {
     WebDriver driver;
 
     @BeforeMethod
@@ -26,14 +25,16 @@ public class AddRemoveElementsTest {
     }
 
     @Test
-    public void addRemoveElements() {
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.cssSelector("[onclick='addElement()']")).click();
-        driver.findElement(By.cssSelector("[onclick='addElement()']")).click();
-        List<WebElement> webElementListBeforeRemoval = driver.findElements(By.className("added-manually"));
-        webElementListBeforeRemoval.get(1).click();
-        List<WebElement> webElementListAfterRemoval = driver.findElements(By.className("added-manually"));
-        Assert.assertEquals(webElementListAfterRemoval.size(), 1, "Quantity of elements is not correct after removal!");
+    public void checkboxesStatus() {
+        driver.get("https://the-internet.herokuapp.com/checkboxes");
+        WebElement firstCheckbox = driver.findElements(By.cssSelector("[type=checkbox]")).get(0);
+        WebElement secondCheckbox = driver.findElements(By.cssSelector("[type=checkbox]")).get(1);
+        Assert.assertFalse(firstCheckbox.isSelected(), "Checkbox is selected");
+        firstCheckbox.click();
+        Assert.assertTrue(firstCheckbox.isSelected(), "Checkbox is Not selected");
+        Assert.assertTrue(secondCheckbox.isSelected(), "Checkbox is Not selected");
+        secondCheckbox.click();
+        Assert.assertFalse(secondCheckbox.isSelected(), "Checkbox is selected");
     }
 
     @AfterMethod(alwaysRun = true)

@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -13,7 +14,7 @@ import java.time.Duration;
 import java.util.List;
 
 
-public class AddRemoveElementsTest {
+public class DropdownTest {
     WebDriver driver;
 
     @BeforeMethod
@@ -26,14 +27,18 @@ public class AddRemoveElementsTest {
     }
 
     @Test
-    public void addRemoveElements() {
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.cssSelector("[onclick='addElement()']")).click();
-        driver.findElement(By.cssSelector("[onclick='addElement()']")).click();
-        List<WebElement> webElementListBeforeRemoval = driver.findElements(By.className("added-manually"));
-        webElementListBeforeRemoval.get(1).click();
-        List<WebElement> webElementListAfterRemoval = driver.findElements(By.className("added-manually"));
-        Assert.assertEquals(webElementListAfterRemoval.size(), 1, "Quantity of elements is not correct after removal!");
+    public void dropdown() {
+        driver.get("https://the-internet.herokuapp.com/dropdown");
+        WebElement dropdown = driver.findElement(By.id("dropdown"));
+        Select select = new Select(dropdown);
+        List<WebElement> options = select.getOptions();
+        Assert.assertEquals(options.get(0).getText(), "Please select an option");
+        Assert.assertEquals(options.get(1).getText(), "Option 1");
+        Assert.assertEquals(options.get(2).getText(), "Option 2");
+        select.selectByVisibleText("Option 1");
+        Assert.assertEquals(select.getFirstSelectedOption().getText(), "Option 1", "Option 1 is not selected");
+        select.selectByVisibleText("Option 2");
+        Assert.assertEquals(select.getFirstSelectedOption().getText(), "Option 2", "Option 1 is not selected");
     }
 
     @AfterMethod(alwaysRun = true)
