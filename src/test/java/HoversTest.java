@@ -30,20 +30,19 @@ public class HoversTest {
         actions.moveToElement(driver.findElement(By.xpath("//div[@class='figure'][1]/img"))).perform();
         Assert.assertEquals(driver.findElement(By.xpath("//div[@class='figure'][1]/div/h5")).getText(), "name: user1", "Name of the user is not correct!");
         driver.findElement(By.cssSelector("[href='/users/1']")).click();
-        Assert.assertNotEquals(driver.findElement(By.tagName("body")).getAttribute("innerText"), "Not Found", "Profile page is not found");
+        Assert.assertFalse(driver.findElement(By.tagName("body")).getAttribute("innerText").contains("Not Found"), "Profile page is not found");
         driver.navigate().back();
 
         actions.moveToElement(driver.findElement(By.xpath("//div[@class='figure'][2]/img"))).perform();
         Assert.assertEquals(driver.findElement(By.xpath("//div[@class='figure'][2]/div/h5")).getText(), "name: user2", "Name of the user is not correct!");
         driver.findElement(By.cssSelector("[href='/users/2']")).click();
-        Assert.assertNotEquals(driver.findElement(By.tagName("body")).getAttribute("innerText"), "Not Found", "Profile page is not found");
+        Assert.assertFalse(driver.findElement(By.tagName("body")).getAttribute("innerText").contains("Not Found"), "Profile page is not found");
         driver.navigate().back();
 
         actions.moveToElement(driver.findElement(By.xpath("//div[@class='figure'][3]/img"))).perform();
         Assert.assertEquals(driver.findElement(By.xpath("//div[@class='figure'][3]/div/h5")).getText(), "name: user3", "Name of the user is not correct!");
         driver.findElement(By.cssSelector("[href='/users/3']")).click();
-        Assert.assertNotEquals(driver.findElement(By.tagName("body")).getAttribute("innerText"), "Not Found", "Profile page is not found");
-
+        Assert.assertFalse(driver.findElement(By.tagName("body")).getAttribute("innerText").contains("Not Found"), "Profile page is not found");
     }
 
     @AfterMethod(alwaysRun = true)
