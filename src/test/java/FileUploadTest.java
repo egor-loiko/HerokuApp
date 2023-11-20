@@ -29,7 +29,7 @@ public class FileUploadTest {
     public void dynamicControls() {
         Actions actions = new Actions(driver);
         String fileName = "bitrix producer - send message to kafka.txt";
-        File file = new File("src\\test\\resources\\" + fileName);
+        File file = new File("src/test/resources/" + fileName);
         driver.get("https://the-internet.herokuapp.com/upload");
         driver.findElement(By.id("file-upload")).sendKeys(file.getAbsolutePath());
         driver.findElement(By.id("file-submit")).click();
