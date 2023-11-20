@@ -1,0 +1,27 @@
+\Bitrix\Main\Loader::includeModule('ss.kafka');
+
+$config = (new \SS\Kafka\Config\ConfigFactory())->createProducerConfig();
+
+$producer = new \RdKafka\Producer($config->getRdKafkaConfig());
+
+$topicName = 'erp.departments_dev';
+$message = '{"uid":"118eb62f-d59e-11eb-9122-893b240666c1","name":"Test 12","parentUID":null,"isActive": true}';
+
+$topic = $producer->newTopic($topicName);
+
+$topic->produce(RD_KAFKA_PARTITION_UA, 0, $message, null);
+$producer->poll(0);
+
+$flushTimeout = 10000;
+$flushRetries = 1;
+
+for ($i = 1; $i <= $flushRetries; $i++) {
+	$sendResult = $producer->flush($flushTimeout);
+	if (RD_KAFKA_RESP_ERR_NO_ERROR === $sendResult) {
+		break;
+	}
+}
+
+if (RD_KAFKA_RESP_ERR_NO_ERROR !== $sendResult) {
+	var_dump('Was unable to flush, messages might be lost!');
+}
